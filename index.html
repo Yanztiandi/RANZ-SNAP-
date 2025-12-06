@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RANZ-SNAP - TikTok Auto Detect</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: 'Arial', sans-serif;
+        background: #0b0b0b;
+        color: #fff;
+        padding: 20px;
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 5px;
+        font-size: 32px;
+        letter-spacing: 1px;
+        font-weight: 900;
+    }
+
+    .tagline {
+        text-align: center;
+        margin-bottom: 25px;
+        font-size: 14px;
+        opacity: .7;
+    }
+
+    .container {
+        max-width: 500px;
+        margin: auto;
+        background: #111;
+        padding: 20px;
+        border-radius: 16px;
+        box-shadow: 0 0 20px rgba(255, 0, 80, 0.2);
+    }
+
+    input {
+        width: 100%;
+        padding: 14px;
+        border-radius: 10px;
+        border: none;
+        margin-top: 10px;
+        font-size: 15px;
+        outline: none;
+        background: #1c1c1c;
+        color: white;
+    }
+
+    .result-box {
+        margin-top: 20px;
+        padding: 15px;
+        background: #1a1a1a;
+        border-radius: 12px;
+        display: none;
+    }
+
+    .thumb {
+        width: 100%;
+        border-radius: 14px;
+        margin-top: 15px;
+    }
+
+    .label {
+        font-size: 14px;
+        opacity: 0.8;
+        margin-top: 5px;
+    }
+
+    .brand {
+        text-align: center;
+        font-size: 18px;
+        opacity: .8;
+        font-weight: 600;
+        letter-spacing: 1px;
+        margin-bottom: 6px;
+    }
+
+    .btn {
+        width: 100%;
+        padding: 14px;
+        margin-top: 15px;
+        background: #ff0050;
+        border: none;
+        border-radius: 12px;
+        font-size: 16px;
+        color: white;
+        cursor: pointer;
+        font-weight: bold;
+        transition: 0.2s;
+    }
+
+    .btn:hover {
+        background: #ff2b6e;
+    }
+</style>
+</head>
+<body>
+
+<h1>RANZ-SNAP</h1>
+<div class="tagline">AI-Powered TikTok Scanner • Smart Detect • Fast Downloader</div>
+
+<div class="container">
+
+    <label class="label">Masukkan link TikTok</label>
+    <input type="text" id="tiktokInput" placeholder="https://www.tiktok.com/...">
+
+    <div class="result-box" id="resultBox">
+
+        <div class="brand">RANZ-SNAP • Result</div>
+
+        <p id="detectedLink"></p>
+
+        <!-- FOTO MUNCUL PASTI -->
+        <img 
+            src="https://files.catbox.moe/hxa2zw.jpeg" 
+            class="thumb" 
+            alt="Thumbnail"
+            onerror="this.src='https://via.placeholder.com/500x600/111111/ffffff?text=Image+Not+Found'">
+        
+        <button class="btn" id="downloadBtn">Download</button>
+
+    </div>
+</div>
+
+<script>
+    const input = document.getElementById("tiktokInput");
+    const box = document.getElementById("resultBox");
+    const detected = document.getElementById("detectedLink");
+    const dlBtn = document.getElementById("downloadBtn");
+
+    let lastLink = "";
+
+    input.addEventListener("input", () => {
+        const val = input.value;
+        const pattern = /(https?:\/\/(?:www\.)?tiktok\.com\/[^\s]+)/;
+
+        if (pattern.test(val)) {
+            const link = val.match(pattern)[0];
+            lastLink = link;
+
+            detected.innerHTML = "Link terdeteksi:<br><b>" + link + "</b>";
+            box.style.display = "block";
+        } else {
+            box.style.display = "none";
+        }
+    });
+
+    dlBtn.addEventListener("click", () => {
+        if (!lastLink) return;
+        window.open(lastLink + "?dl=1", "_blank");
+    });
+</script>
+
+</body>
+</html>
